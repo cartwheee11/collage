@@ -1,6 +1,6 @@
 
 
-let Jimp = require('Jimp');
+let Jimp = require('jimp');
 
 async function collage(tmp) {
 	let defs= {
