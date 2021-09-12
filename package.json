@@ -1,0 +1,16 @@
+{
+  "name": "collage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "jimp": "^0.16.1",
+    "node-fetch": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cartwheee11",
+  "license": "MIT"
+}
