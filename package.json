@@ -1,11 +1,8 @@
 {
   "name": "collage",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A library for making collages from array of images",
   "main": "./src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "scripts": {
     "start": "node ./src/index.js"
   },
@@ -21,5 +18,22 @@
   "homepage": "https://github.com/cartwheee11/collage#readme",
   "dependencies": {
     "jimp": "^0.16.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "prettier": "^2.4.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ],
+    "rules": {
+      "arrow-parens": "off",
+      "no-new": "off"
+    }
   }
 }
