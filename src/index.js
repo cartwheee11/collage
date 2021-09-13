@@ -1,9 +1,7 @@
-
-
 let Jimp = require('jimp');
 
 async function collage(tmp) {
-	let defs= {
+	let defs = {
 		gap: 30,
 		width: 1000,
 		images: [],
@@ -13,60 +11,55 @@ async function collage(tmp) {
 	let opts = {};
 	Object.assign(opts, defs, tmp);
 
-	if(opts.image) {
+	if (opts.image) {
 		opts.images.push(image);
 	}
 
 	let rowsNumber = Math.ceil(opts.images.length / opts.cols);
 	let rows = [];
 
-
 	//making rows from images array
-	for(let i = 0; i < rowsNumber; i++) {
+	for (let i = 0; i < rowsNumber; i++) {
 		rows[i] = {};
 		rows[i].images = [];
 
-		for(let j = 0; j < opts.cols; j++) {
-			if(opts.images.length)
+		for (let j = 0; j < opts.cols; j++) {
+			if (opts.images.length)
 				rows[i].images[j] = await Jimp.read(opts.images.shift());
 		}
 
 		//computing row hegiht
 		let devisor = 0;
 		rows[i].images.forEach(image => {
-			devisor += image.bitmap.width / image.bitmap.height;
+			devisor += (image.bitmap.width) / (image.bitmap.height);
+
 		})
-		
-		rows[i].height = opts.width / devisor;
+		// console.log(rows[i].images.length)
+		rows[i].height = (opts.width - opts.gap * rows[i].images.length) / devisor;
 	}
 
 	//making canvas
-	let heights = rows.map(row => row.height )
+	let heights = rows.map(row => row.height)
 	let canvasHeight = heights.reduce((sum, height) => sum + height);
 
 	let buffer = new Promise((res, rej) => {
-		new Jimp(opts.width, canvasHeight, (err, canvas) => {
+		new Jimp(opts.width + opts.gap, canvasHeight + opts.gap * rows.length + opts.gap, (err, canvas) => {
 
-			let heightOffset = 0;
+			let heightOffset = opts.gap;
 
+			rows.forEach((row, i) => {
+				let lastRow = i == rows.length - 1;
 
-			rows.forEach(row => {
+				let widthOffset = opts.gap;
 
-				let widthOffset = 0;
-
-				row.images.forEach(image => {
+				row.images.forEach((image, j) => {
 					image.resize(Jimp.AUTO, row.height)
-					canvas.composite(image, widthOffset, heightOffset)
-
+					canvas.composite(image, widthOffset + opts.gap * j, heightOffset + opts.gap * i)
 					widthOffset += image.bitmap.width
 				})
 
 				heightOffset += row.height;
-
 			})
-
-			// canvas.write('./copmosed.png')
-
 			canvas.getBuffer(Jimp.AUTO, (error, buffer) => {
 				res(buffer);
 			})
@@ -74,24 +67,7 @@ async function collage(tmp) {
 		})
 	});
 
-	
-
 	return buffer;
 }
-
-// let buffer = collage({
-// 	images: [
-// 		'./images/1.png',
-// 		'./images/2.png',
-// 		'./images/3.png',
-// 		'./images/4.jpg',
-// 		'./images/5.png',
-// 		'./images/6.png',
-// 		'./images/7.png',
-// 	],
-// })
-
-// // console.log(buffer)
-// buffer.then(console.log)
 
 module.exports = collage;
