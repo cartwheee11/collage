@@ -1,15 +1,16 @@
 const Jimp = require("jimp");
 
-async function collage(tmp) {
+async function collage(options) {
   const defs = {
     gap: 30,
     width: 1000,
     images: [],
     image: null,
     cols: 2,
+    background: 0xFFFFFFFF
   };
   const opts = {};
-  Object.assign(opts, defs, tmp);
+  Object.assign(opts, defs, options);
 
   if (opts.image) {
     opts.images.push(opts.image);
@@ -48,7 +49,7 @@ async function collage(tmp) {
     const width = opts.width + opts.gap;
     const height = canvasHeight + opts.gap * rows.length + opts.gap;
 
-    new Jimp(width, height, (err, canvas) => {
+    new Jimp(width, height, opts.background, (err, canvas) => {
       let heightOffset = opts.gap;
 
       rows.forEach((row, i) => {
@@ -76,4 +77,5 @@ async function collage(tmp) {
   return buffer;
 }
 
-module.exports = collage;
+module.exports = collage
+
