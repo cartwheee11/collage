@@ -1,6 +1,6 @@
 {
   "name": "collage",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A library for making collages from array of images",
   "main": "./src/index.js",
   "scripts": {

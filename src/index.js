@@ -1,7 +1,7 @@
 const Jimp = require("jimp");
 
 /**
- * Use this function to meke a collage out of all those images you have
+ * Use this function to make a collage out of all those images you have
  * @param {Object} options
  * @param {number} options.gap — gap between images in final collage, it's 30 by default
  * @param {number} options.width — result image's width, it's 500 by default
