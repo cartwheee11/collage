@@ -1,5 +1,16 @@
 const Jimp = require("jimp");
 
+/**
+ * Use this function to meke a collage out of all those images you have
+ * @param {Object} options
+ * @param {number} options.gap — gap between images in final collage, it's 30 by default
+ * @param {number} options.width — result image's width, it's 500 by default
+ * @param {Array} options.images — array of image URLs
+ * @param {number} options.cols — result image's columns number, it's 2 by default
+ * @param {number} options.background — hex string that looks like 0xFFFFFFFF, it's white by default
+ * @param {number} options.image — use this option if you only one image
+ * @returns {Promise<Buffer>} a buffer of result image
+ */
 async function collage(options) {
   const defs = {
     gap: 30,
@@ -78,4 +89,3 @@ async function collage(options) {
 }
 
 module.exports = collage
-
