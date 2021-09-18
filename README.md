@@ -41,9 +41,11 @@ collage({
   width: 1000,
   background: 0x555555FF,
   gap: 10,
-  cols: 3
+  cols: 3,
+  remainderToTop: false,
 }).then(buffer => global.console.log)
 ```
+The "remainderToTop" option receives `true` or `false` and determines behaviour of remainder of images located at the end of array that don't fit into a columns number. If it `false`, there extra images will be moved to new row not exceeding a strict number of columns. If it `true` (default value), the images will be crowded in current row
 
 ## License
 

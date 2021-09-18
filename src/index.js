@@ -9,6 +9,7 @@ const Jimp = require("jimp");
  * @param {number} options.cols — result image's columns number, it's 2 by default
  * @param {number} options.background — hex string that looks like 0xFFFFFFFF, it's white by default
  * @param {number} options.image — use this option if you only one image
+ * @param {Bullean} options.remainderToTop — this controls position of remainder of images which don't fit into a columns number (holding in in last row or putting into penult one). It's true by default
  * @returns {Promise<Buffer>} a buffer of result image
  */
 async function collage(options) {
@@ -18,7 +19,7 @@ async function collage(options) {
     images: [],
     image: null,
     cols: 2,
-    reminderToTop: true,
+    remainderToTop: true,
     background: 0xFFFFFFFF
   };
   const opts = {};
@@ -54,7 +55,7 @@ async function collage(options) {
   }
 
   if (
-    opts.reminderToTop &&
+    opts.remainderToTop &&
     opts.images.length % rowsNumber < opts.cols &&
     rows.length > 1
   ) {
