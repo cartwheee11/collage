@@ -18,6 +18,7 @@ async function collage(options) {
     images: [],
     image: null,
     cols: 2,
+    reminderToTop: true,
     background: 0xFFFFFFFF
   };
   const opts = {};
@@ -27,7 +28,7 @@ async function collage(options) {
     opts.images.push(opts.image);
   }
 
-  const rowsNumber = Math.ceil(opts.images.length / opts.cols);
+  let rowsNumber = Math.ceil(opts.images.length / opts.cols);
   const rows = [];
 
   //  making rows from images array
@@ -51,6 +52,32 @@ async function collage(options) {
 
     rows[i].height = (opts.width - opts.gap * rows[i].images.length) / devisor;
   }
+
+  if (
+    opts.reminderToTop &&
+    opts.images.length % rowsNumber < opts.cols &&
+    rows.length > 1
+  ) {
+
+    const remainder = rows.pop();
+    rows[rows.length - 1].images = rows[rows.length - 1].images.concat(remainder.images);
+
+
+    // sorry for code dublication, i will fix that soon (:
+    let devisor = 0;
+    rows[rows.length - 1].images.forEach((image) => {
+      devisor += image.bitmap.width / image.bitmap.height;
+    });
+
+    rows[rows.length - 1].height = (opts.width - opts.gap * rows[rows.length - 1].images.length) / devisor;
+
+
+  }
+  
+
+  // console.log(rows[rows.length - 1].);
+
+  
 
   //  making canvas
   const heights = rows.map((row) => row.height);
